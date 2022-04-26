@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Components
+import Header from "./Components/Header";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Listing from "./Pages/Listing";
+import Product from "./Pages/Product";
+import Cart from "./Pages/Cart";
+import { Main } from "./CommonStyles";
+
+class App extends Component {
+  render() {
+    return (
+      <>
+        <Header />
+
+        <Main>
+          <Routes>
+            <Route path="/" element={<Listing />} />
+
+            <Route path="/category/:category" element={<Listing />} />
+
+            <Route path="/product/:id" element={<Product />} />
+
+            <Route path="/cart" element={<Cart />} />
+
+            <Route path="/not-found" element={<>Not Found</>} />
+
+            <Route path="/*" element={<Navigate to="/not-found" replace={true} />} />
+          </Routes>
+        </Main>
+      </>
+    );
+  }
 }
 
 export default App;
