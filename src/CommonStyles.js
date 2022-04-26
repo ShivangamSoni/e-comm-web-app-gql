@@ -8,4 +8,5 @@ export const widthWrap = css`
 
 export const Main = styled.main`
   ${widthWrap}
+  padding-bottom: 20px;
 `;

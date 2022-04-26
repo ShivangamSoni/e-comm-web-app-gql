@@ -29,7 +29,7 @@ class Listing extends Component {
         <Title>{params.category || "All Products"}</Title>
 
         <ProductsList>
-          {category.products.map((item) => (
+          {category.products.slice(0).map((item) => (
             <ProductCard key={item.id} {...item} />
           ))}
         </ProductsList>
@@ -38,7 +38,7 @@ class Listing extends Component {
   }
 }
 
-const HOC = graphql(GET_PRODUCTS_LISTING, {
+const withGQL = graphql(GET_PRODUCTS_LISTING, {
   options: (props) => {
     let { category } = props.params;
 
@@ -50,4 +50,4 @@ const HOC = graphql(GET_PRODUCTS_LISTING, {
   },
 });
 
-export default withRouter(HOC(Listing));
+export default withRouter(withGQL(Listing));

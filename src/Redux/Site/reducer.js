@@ -1,6 +1,6 @@
 import SITE_ACTIONS from "./ActionTypes";
 
-const siteReducer = (state, action) => {
+const siteReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -8,7 +8,7 @@ const siteReducer = (state, action) => {
       return { ...state, currency: payload };
     }
     default: {
-      return {};
+      return state;
     }
   }
 };

@@ -9,6 +9,8 @@ import CurrencySelect from "../CurrencySelect";
 
 import { ReactComponent as CartIcon } from "../../Assets/Vector.svg";
 
+import { connect } from "react-redux";
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +30,7 @@ class Header extends Component {
 
   render() {
     const { cartOpen } = this.state;
+    const { cartCount } = this.props;
     const { toggleCartOverlay } = this;
 
     return (
@@ -38,8 +41,8 @@ class Header extends Component {
 
         <NavActions>
           <CurrencySelect />
-          <Icon count={0}>
-            <CartIcon onClick={toggleCartOverlay} />
+          <Icon count={cartCount} onClick={toggleCartOverlay}>
+            <CartIcon />
           </Icon>
         </NavActions>
 
@@ -49,4 +52,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const MapStateToProps = (state) => {
+  return { cartCount: state.cart.count };
+};
+
+export default connect(MapStateToProps, null)(Header);

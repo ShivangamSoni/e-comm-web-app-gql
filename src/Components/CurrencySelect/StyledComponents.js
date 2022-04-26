@@ -32,6 +32,7 @@ export const SelectBody = styled.ul`
   position: absolute;
   top: calc(100% + 5px);
   right: 0;
+  z-index: 10;
   list-style: none;
   width: 250%;
   background-color: #fff;
