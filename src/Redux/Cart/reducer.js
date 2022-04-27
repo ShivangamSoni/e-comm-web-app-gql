@@ -1,7 +1,9 @@
 import CART_ACTIONS from "./ActionTypes";
 import shallowEquals from "../../Utils/shallowEquals";
 
-const cartReducer = (state = { count: 0, items: [] }, action) => {
+import { v4 as uuid } from "uuid";
+
+const cartReducer = (state = { count: 0, items: [], tax: 15 }, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -11,7 +13,7 @@ const cartReducer = (state = { count: 0, items: [] }, action) => {
       const product = JSON.parse(JSON.stringify(payload));
 
       const index = state.items.findIndex((item) => {
-        if (item.id === product.id && shallowEquals(item.attributes, product.attributes)) {
+        if (item.productId === product.productId && shallowEquals(item.attributes, product.attributes)) {
           return true;
         }
         return false;
@@ -24,7 +26,44 @@ const cartReducer = (state = { count: 0, items: [] }, action) => {
         return { ...state };
       }
 
+      product.id = uuid();
+
       return { ...state, items: [...state.items, product] };
+    }
+    case CART_ACTIONS.UPDATE_QUANTITY: {
+      const { id, sign } = payload;
+
+      const index = state.items.findIndex((item) => item.id === id);
+
+      if (index === -1) {
+        return state;
+      }
+
+      if (sign === "+") {
+        state.items[index].quantity++;
+        state.count++;
+      } else if (sign === "-") {
+        state.items[index].quantity--;
+        state.count--;
+      }
+
+      if (state.items[index].quantity <= 0) {
+        state.items.splice(index, 1);
+      }
+
+      return { ...state };
+    }
+    case CART_ACTIONS.REMOVE_PRODUCT: {
+      const index = state.items.findIndex((item) => item.id === payload);
+
+      if (index === -1) {
+        return state;
+      }
+
+      state.count = state.count - state.items[index].quantity;
+      state.items.splice(index, 1);
+
+      return { ...state };
     }
     default: {
       return state;

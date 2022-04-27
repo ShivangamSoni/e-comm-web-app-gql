@@ -101,7 +101,7 @@ class Product extends Component {
   render() {
     const {
       data: { error, loading, product },
-      selectedCurrency,
+      navigate,
     } = this.props;
 
     if (error) {
@@ -112,7 +112,13 @@ class Product extends Component {
       return "Loading....";
     }
 
+    if (product == null) {
+      navigate("/not-found");
+      return null;
+    }
+
     const { changeImage, updateAttribute, addToCart } = this;
+    const { selectedCurrency } = this.props;
     const { imageIndex, selectedAttributes } = this.state;
     const { brand, name, inStock, gallery, description, prices, attributes } = product;
     const currencyPrice = getPrice(prices, selectedCurrency);
@@ -172,7 +178,7 @@ class Product extends Component {
 
           <Section>
             <Title>price:</Title>
-            <Price>{currencyPrice}</Price>
+            <Price>{`${selectedCurrency}${currencyPrice}`}</Price>
           </Section>
 
           <Button onClick={addToCart} disabled={!inStock}>

@@ -50,7 +50,7 @@ class ProductCard extends Component {
 
         <Info>
           <Title onClick={openProduct}>{`${brand} ${name}`}</Title>
-          <Price>{currencyPrice}</Price>
+          <Price>{`${selectedCurrency}${currencyPrice}`}</Price>
 
           {inStock && (
             <Button onClick={addToCart}>

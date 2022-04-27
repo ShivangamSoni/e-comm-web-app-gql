@@ -1,6 +1,6 @@
 // Calculating/Retrieving the Price as per User Selected Currency
 const getPrice = (prices, selectedCurrency) => {
-  let currencyPrice = "";
+  let currencyPrice = 0;
 
   prices.forEach((price) => {
     const {
@@ -9,7 +9,7 @@ const getPrice = (prices, selectedCurrency) => {
     } = price;
 
     if (symbol === selectedCurrency) {
-      currencyPrice = `${symbol}${amount}`;
+      currencyPrice = amount;
     }
   });
 

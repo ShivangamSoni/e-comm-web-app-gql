@@ -1,15 +1,13 @@
 import styled from "styled-components";
+import { PageTitle } from "../../CommonStyles";
 
 export const Container = styled.div`
   margin-top: 10px;
 `;
 
 export const Title = styled.h1`
-  color: #1d1f22;
-  font-size: 2.6rem;
-  font-weight: 400;
-  margin-bottom: 70px;
-  text-transform: capitalize;
+  ${PageTitle}
+  margin-bottom: 50px;
 `;
 
 export const ProductsList = styled.div`

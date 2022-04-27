@@ -1,15 +1,18 @@
 import { Component } from "react";
 
-import { Container, NavActions, Icon } from "./StyledComponents";
+import { Container, NavActions, Icon, CartOverlay } from "./StyledComponents";
 
 import { ReactComponent as SiteIcon } from "../../Assets/SiteIcon.svg";
 
 import NavBar from "../NavBar";
 import CurrencySelect from "../CurrencySelect";
+import Cart from "../../Pages/Cart";
 
 import { ReactComponent as CartIcon } from "../../Assets/Vector.svg";
 
 import { connect } from "react-redux";
+
+import withRouter from "../../Utils/withRouter";
 
 class Header extends Component {
   constructor(props) {
@@ -26,6 +29,7 @@ class Header extends Component {
     this.setState((prev) => {
       return { cartOpen: !prev.cartOpen };
     });
+    // this.props.navigate("/cart");
   }
 
   render() {
@@ -46,7 +50,11 @@ class Header extends Component {
           </Icon>
         </NavActions>
 
-        {cartOpen && "CARTOVERLAY"}
+        {cartOpen && (
+          <CartOverlay>
+            <Cart />
+          </CartOverlay>
+        )}
       </Container>
     );
   }
@@ -56,4 +64,4 @@ const MapStateToProps = (state) => {
   return { cartCount: state.cart.count };
 };
 
-export default connect(MapStateToProps, null)(Header);
+export default connect(MapStateToProps, null)(withRouter(Header));
