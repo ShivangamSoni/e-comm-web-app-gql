@@ -23,9 +23,12 @@ export const ShowCase = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: 150px;
+  gap: 3px;
 `;
 
-export const Tile = styled.div``;
+export const Tile = styled.div`
+  cursor: pointer;
+`;
 
 export const SelectedImage = styled.div``;
 
@@ -39,7 +42,8 @@ export const Image = styled.img`
 export const Info = styled.div`
   grid-area: info;
   display: grid;
-  gap: 30px;
+  grid-auto-rows: minmax(auto, max-content);
+  gap: 40px;
 `;
 
 export const Brand = styled.h2`
@@ -54,22 +58,37 @@ export const Name = styled.h3`
   font-weight: 400;
 `;
 
-export const Section = styled.div``;
+export const Section = styled.div`
+  display: grid;
+  gap: 5px;
+`;
 
 export const AttrWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 50px);
-  grid-template-rows: 50px;
+  grid-template-columns: repeat(auto-fit, ${({ type }) => (type === "swatch" ? "32px" : "minmax(50px, auto)")});
+  grid-auto-rows: ${({ type }) => (type === "swatch" ? "32px" : "50px")};
   gap: 10px;
-  height: 50px;
 `;
 
-export const ColorAttr = styled.div`
+export const ColorAttr = styled.button`
+  appearance: none;
+  border: none;
+  outline: none;
   background-color: ${({ color }) => color};
-  height: 100%;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  box-shadow: ${({ active, disabled }) => active && !disabled && "0 0 0 1px #fff, 0 0 0 2px #5ece7b"};
 `;
 
-export const TextAttr = styled.button``;
+export const TextAttr = styled.button`
+  appearance: none;
+  border: none;
+  outline: none;
+  height: 100%;
+  color: ${({ active, disabled }) => (active && !disabled ? "#fff" : "#A6A6A6")};
+  background-color: ${({ active, disabled }) => (active && !disabled ? "#000" : "#fff")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  border: 1px solid #a6a6a6;
+`;
 
 export const Title = styled.h4`
   color: #1d1f22;
@@ -88,7 +107,7 @@ export const Button = styled.button`
   appearance: none;
   border: none;
   padding: none;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   font-size: 1rem;
   font-weight: 600;
   color: #fff;

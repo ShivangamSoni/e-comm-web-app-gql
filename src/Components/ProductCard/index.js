@@ -27,12 +27,11 @@ class ProductCard extends Component {
     const { id, attributes, dispatchAddProduct } = this.props;
 
     // If Product have Attributes then Open the Product Page
-    if (attributes.length > 0) {
+    if (attributes.length === 0) {
+      dispatchAddProduct(id, {});
+    } else {
       this.openProduct();
-      return;
     }
-
-    dispatchAddProduct(id, attributes);
   }
 
   render() {

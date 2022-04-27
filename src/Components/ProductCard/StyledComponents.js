@@ -7,22 +7,22 @@ export const Button = styled.button`
   border-radius: 50%;
   cursor: pointer;
   background-color: #5ece7b;
-  width: 33px;
-  height: 33px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -35px;
+  top: -50px;
   right: 10px;
   transform: scale(0);
 `;
 
 export const Container = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 5fr 1fr;
+  gap: 10px;
   padding: 15px;
   background-color: #fff;
   position: relative;
@@ -60,12 +60,14 @@ export const ImageWrapper = styled.div`
 
 export const Image = styled.img`
   width: 100%;
+  height: min(450px, 90%);
   aspect-ratio: 1/1;
   object-fit: contain;
 `;
 
 export const Info = styled.div`
   position: relative;
+  align-self: flex-end;
 `;
 
 export const Title = styled.p`

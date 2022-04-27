@@ -27,8 +27,77 @@ import {
   Description,
 } from "./StyledComponents";
 import getPrice from "../../Utils/getPrice";
+import { addProduct } from "../../Redux/Cart/ActionCreators";
 
 class Product extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedAttributes: null,
+      imageIndex: 0,
+    };
+
+    this.changeImage = this.changeImage.bind(this);
+    this.updateAttribute = this.updateAttribute.bind(this);
+    this.addToCart = this.addToCart.bind(this);
+  }
+
+  componentDidMount() {
+    // Needs to be initialized when user Access Product Again
+    // Because in this case cached data is retrieved by Apollo
+    this.initializeAttributes();
+  }
+
+  componentDidUpdate() {
+    this.initializeAttributes();
+  }
+
+  initializeAttributes() {
+    const {
+      data: { loading, product },
+    } = this.props;
+
+    const { selectedAttributes } = this.state;
+
+    if (!loading && product && !selectedAttributes) {
+      const { attributes } = product;
+      const selectAttrs = attributes.reduce((res, attr) => {
+        const { id, items } = attr;
+        res[id] = items[0].id;
+        return res;
+      }, {});
+
+      this.setState({ selectedAttributes: selectAttrs });
+    }
+  }
+
+  changeImage(index) {
+    this.setState({ imageIndex: index });
+  }
+
+  updateAttribute(attrId, itemId) {
+    this.setState((prev) => {
+      const prevSelected = prev.selectedAttributes;
+
+      if (prevSelected[attrId] !== itemId) {
+        prevSelected[attrId] = itemId;
+        return { selectedAttributes: prevSelected };
+      }
+    });
+  }
+
+  addToCart() {
+    const {
+      data: {
+        product: { id },
+      },
+    } = this.props;
+    const { selectedAttributes } = this.state;
+
+    this.props.dispatchAddProduct(id, selectedAttributes);
+  }
+
   render() {
     const {
       data: { error, loading, product },
@@ -43,48 +112,53 @@ class Product extends Component {
       return "Loading....";
     }
 
-    const { brand, name, gallery, description, prices, attributes } = product;
+    const { changeImage, updateAttribute, addToCart } = this;
+    const { imageIndex, selectedAttributes } = this.state;
+    const { brand, name, inStock, gallery, description, prices, attributes } = product;
     const currencyPrice = getPrice(prices, selectedCurrency);
 
-    console.log(attributes);
+    let attributeElements = null;
 
-    const attributeElements = attributes.map(({ id, items, type, name }) => {
-      let attrSets = [];
+    if (selectedAttributes) {
+      attributeElements = attributes.map(({ id: attrId, items, type, name }) => {
+        let attrSets = items.map(({ id, value, displayValue }) => {
+          const active = selectedAttributes[attrId] === id;
+          const onCLick = () => updateAttribute(attrId, id);
 
-      if (type === "swatch") {
-        attrSets = items.map(({ id, value, displayValue }) => {
-          return <ColorAttr key={id} title={displayValue} color={value} />;
+          if (type === "swatch") {
+            return <ColorAttr key={id} title={displayValue} color={value} active={active} onClick={onCLick} disabled={!inStock}></ColorAttr>;
+          } else {
+            return (
+              <TextAttr key={id} title={displayValue} active={active} onClick={onCLick} disabled={!inStock}>
+                {value}
+              </TextAttr>
+            );
+          }
         });
-      } else {
-        attrSets = items.map(({ id, value, displayValue }) => {
-          return (
-            <TextAttr key={id} title={displayValue} value={value}>
-              {displayValue}
-            </TextAttr>
-          );
-        });
-      }
 
-      return (
-        <Section key={id}>
-          <Title>{name}:</Title>
+        return (
+          <Section key={attrId}>
+            <Title>{name}:</Title>
 
-          <AttrWrapper>{attrSets}</AttrWrapper>
-        </Section>
-      );
-    });
+            <AttrWrapper type={type}>{attrSets}</AttrWrapper>
+          </Section>
+        );
+      });
+    }
 
     return (
       <Container>
         <Gallery>
           <ShowCase>
-            <Tile>
-              <Image src={gallery[0]} />
-            </Tile>
+            {gallery.map((imgSrc, index) => (
+              <Tile key={index} onClick={() => changeImage(index)}>
+                <Image src={imgSrc} />
+              </Tile>
+            ))}
           </ShowCase>
 
           <SelectedImage>
-            <Image src={gallery[0]} contain />
+            <Image src={gallery[imageIndex]} contain />
           </SelectedImage>
         </Gallery>
 
@@ -101,7 +175,9 @@ class Product extends Component {
             <Price>{currencyPrice}</Price>
           </Section>
 
-          <Button>Add to Cart</Button>
+          <Button onClick={addToCart} disabled={!inStock}>
+            {inStock ? "Add to Cart" : "Out of Stock"}
+          </Button>
 
           <Description dangerouslySetInnerHTML={{ __html: description }} />
         </Info>
@@ -121,4 +197,8 @@ const MapStateToProps = (state) => {
   return { selectedCurrency: state.site.currency };
 };
 
-export default connect(MapStateToProps, null)(withRouter(withGQL(Product)));
+const MapDispatchToProps = (dispatch) => {
+  return { dispatchAddProduct: (id, attributes) => dispatch(addProduct(id, attributes)) };
+};
+
+export default connect(MapStateToProps, MapDispatchToProps)(withRouter(withGQL(Product)));
