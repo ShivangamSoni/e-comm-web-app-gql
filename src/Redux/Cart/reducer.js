@@ -53,6 +53,31 @@ const cartReducer = (state = { count: 0, items: [], tax: 15 }, action) => {
 
       return { ...state };
     }
+    case CART_ACTIONS.UPDATE_ATTRIBUTES: {
+      const { id, attributes } = payload;
+
+      const index = state.items.findIndex((item) => item.id === id);
+
+      if (index === -1) {
+        return state;
+      }
+
+      const { productId } = state.items[index];
+
+      // If an Item with same productId & attributes already exist
+      const matchedIndex = state.items.findIndex((item) => item.productId === productId && shallowEquals(item.attributes, attributes));
+
+      if (matchedIndex === -1) {
+        state.items[index].attributes = attributes;
+        return { ...state };
+      } else {
+        const qty = state.items[index].quantity;
+        state.items[matchedIndex].quantity += qty;
+        state.items.splice(index, 1);
+
+        return { ...state };
+      }
+    }
     case CART_ACTIONS.REMOVE_PRODUCT: {
       const index = state.items.findIndex((item) => item.id === payload);
 

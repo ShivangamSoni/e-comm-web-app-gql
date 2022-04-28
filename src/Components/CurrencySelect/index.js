@@ -1,9 +1,14 @@
+// React
 import { Component, createRef } from "react";
 
+// Styled Components
 import { SelectContainer, SelectHeader, SelectedTitle, SelectBody, SelectOption } from "./StyledComponents";
 
+// Apollo GraphQl
 import { GET_CURRENCIES } from "../../Apollo/queries";
 import { graphql } from "@apollo/client/react/hoc";
+
+// Redux
 import { connect } from "react-redux";
 import { setCurrency } from "../../Redux/Site/ActionCreators";
 
@@ -94,6 +99,10 @@ class CurrencySelect extends Component {
   }
 }
 
+// GraphQL
+const withGQL = graphql(GET_CURRENCIES);
+
+// REDUX
 const MapStateToProps = (state) => {
   return { selectedCurrency: state.site.currency };
 };
@@ -102,4 +111,4 @@ const MapDispatchToProps = (dispatch) => {
   return { dispatchSetCurrency: (symbol) => dispatch(setCurrency(symbol)) };
 };
 
-export default connect(MapStateToProps, MapDispatchToProps)(graphql(GET_CURRENCIES)(CurrencySelect));
+export default connect(MapStateToProps, MapDispatchToProps)(withGQL(CurrencySelect));

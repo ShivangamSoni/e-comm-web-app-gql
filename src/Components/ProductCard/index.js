@@ -1,13 +1,20 @@
+// React
 import { Component } from "react";
 
-import { connect } from "react-redux";
-
+// Styled Components
 import { Container, ImageWrapper, Image, Info, Title, Price, Overlay, Button } from "./StyledComponents";
 
+// Components
 import { ReactComponent as CartIcon } from "../../Assets/Vector.svg";
 
-import withRouter from "../../Utils/withRouter";
+// Redux
+import { connect } from "react-redux";
 import { addProduct } from "../../Redux/Cart/ActionCreators";
+
+// React Router HOC
+import withRouter from "../../Utils/withRouter";
+
+// Utility Functions
 import getPrice from "../../Utils/getPrice";
 
 class ProductCard extends Component {
@@ -26,7 +33,7 @@ class ProductCard extends Component {
   addToCart() {
     const { id, attributes, dispatchAddProduct } = this.props;
 
-    // If Product have Attributes then Open the Product Page
+    // If Product doesn't have Attributes then Add to cart, otherwise, open the Product Page
     if (attributes.length === 0) {
       dispatchAddProduct(id, {});
     } else {
@@ -63,6 +70,7 @@ class ProductCard extends Component {
   }
 }
 
+// Redux
 const MapStateToProps = (state) => {
   return { selectedCurrency: state.site.currency };
 };
@@ -73,4 +81,4 @@ const MapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(MapStateToProps, MapDispatchToProps)(ProductCard));
+export default connect(MapStateToProps, MapDispatchToProps)(withRouter(ProductCard));

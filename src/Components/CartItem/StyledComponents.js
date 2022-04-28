@@ -3,16 +3,14 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 300px auto;
+  grid-template-rows: 250px auto;
   grid-template-areas:
     "info wrapper"
     "info .";
-  gap: 50px;
+  column-gap: ${({ overlay }) => (overlay ? "20px" : "200px")};
   padding: 10px 0;
-
-  & + & {
-    border-top: 1px solid #e5e5e5;
-  }
+  border-bottom: 1px solid #e5e5e5;
+  padding-left: 5px;
 `;
 
 export const Info = styled.div`
@@ -24,14 +22,14 @@ export const Info = styled.div`
 
 export const Brand = styled.h2`
   color: #1d1f22;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: ${({ overlay }) => (overlay ? "1rem" : "1.8rem")};
+  font-weight: ${({ overlay }) => (overlay ? 300 : 600)};
 `;
 
 export const Name = styled.h3`
   color: #1d1f22;
-  font-size: 1.8rem;
-  font-weight: 400;
+  font-size: ${({ overlay }) => (overlay ? "1rem" : "1.8rem")};
+  font-weight: ${({ overlay }) => (overlay ? 300 : 400)};
 `;
 
 export const Section = styled.div`
@@ -40,8 +38,21 @@ export const Section = styled.div`
 
 export const AttrWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, ${({ type }) => (type === "swatch" ? "32px" : "minmax(50px, auto)")});
-  grid-auto-rows: ${({ type }) => (type === "swatch" ? "32px" : "50px")};
+  ${({ type, overlay }) => {
+    const styles = {};
+
+    if (type === "swatch") {
+      const size = overlay ? "20px" : "32px";
+      styles.gridTemplateColumns = `repeat(auto-fit, ${size})`;
+      styles.gridAutoRows = size;
+    } else {
+      const size = overlay ? "24px" : "50px";
+      styles.gridTemplateColumns = `repeat(auto-fit, minmax(${size}, auto))`;
+      styles.gridAutoRows = size;
+    }
+
+    return styles;
+  }}
   gap: 10px;
 `;
 
@@ -67,15 +78,15 @@ export const TextAttr = styled.button`
 
 export const Title = styled.h4`
   color: #1d1f22;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: ${({ overlay }) => (overlay ? ".875rem" : "1.1rem")};
+  font-weight: ${({ overlay }) => (overlay ? 400 : 700)};
   text-transform: uppercase;
 `;
 
 export const Price = styled.span`
   color: #1d1f22;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: ${({ overlay }) => (overlay ? "1rem" : "1.5rem")};
+  font-weight: ${({ overlay }) => (overlay ? 500 : 700)};
 `;
 
 export const Button = styled.button`
@@ -86,7 +97,7 @@ export const Button = styled.button`
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  padding: 0.7rem 1rem;
+  padding: ${({ overlay }) => (overlay ? "0.2rem" : "0.5rem")};
   background-color: #5ece7b;
   width: max-content;
 `;
@@ -94,11 +105,8 @@ export const Button = styled.button`
 export const Wrapper = styled.div`
   grid-area: wrapper;
   display: grid;
-  grid-template-columns: 50px 1fr;
+  grid-template-columns: ${({ overlay }) => (overlay ? "25px" : "50px")} 1fr;
   grid-template-rows: 100%;
-  gap: 5px;
-
-  outline: 1px solid red;
 `;
 
 export const Quantity = styled.div`
@@ -115,12 +123,15 @@ export const QuantityBtn = styled.button`
   color: #1d1f22;
   background-color: #fff;
   cursor: pointer;
-  flex: 0 0 45px;
-  width: 45px;
+  flex: 0 0 ${({ overlay }) => (overlay ? "24px" : "45px")};
+  width: ${({ overlay }) => (overlay ? "24px" : "45px")};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const QuantityValue = styled.div`
-  font-size: 1.5rem;
+  font-size: ${({ overlay }) => (overlay ? "1rem" : "1.5rem")};
   font-weight: 500;
 `;
 

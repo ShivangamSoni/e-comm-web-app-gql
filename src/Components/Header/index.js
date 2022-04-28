@@ -1,17 +1,22 @@
-import { Component } from "react";
+// React
+import { Component, createRef } from "react";
 
-import { Container, NavActions, Icon, CartOverlay } from "./StyledComponents";
+// Styled Components
+import { Container, NavActions, Icon, CartOverlay, Backdrop } from "./StyledComponents";
 
-import { ReactComponent as SiteIcon } from "../../Assets/SiteIcon.svg";
-
+// Components
 import NavBar from "../NavBar";
 import CurrencySelect from "../CurrencySelect";
 import Cart from "../../Pages/Cart";
 
+// Icons
 import { ReactComponent as CartIcon } from "../../Assets/Vector.svg";
+import { ReactComponent as SiteIcon } from "../../Assets/SiteIcon.svg";
 
+// Redux HOC
 import { connect } from "react-redux";
 
+// React Router HOC
 import withRouter from "../../Utils/withRouter";
 
 class Header extends Component {
@@ -23,19 +28,28 @@ class Header extends Component {
     };
 
     this.toggleCartOverlay = this.toggleCartOverlay.bind(this);
+    this.cartRef = createRef(null);
+    this.cartButtonRef = createRef(null);
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", (e) => {
+      if (this.state.cartOpen && !this.cartRef.current.contains(e.target) && !this.cartButtonRef.current.contains(e.target)) {
+        this.setState({ cartOpen: false });
+      }
+    });
   }
 
   toggleCartOverlay() {
     this.setState((prev) => {
       return { cartOpen: !prev.cartOpen };
     });
-    // this.props.navigate("/cart");
   }
 
   render() {
     const { cartOpen } = this.state;
     const { cartCount } = this.props;
-    const { toggleCartOverlay } = this;
+    const { toggleCartOverlay, cartRef, cartButtonRef } = this;
 
     return (
       <Container>
@@ -45,21 +59,26 @@ class Header extends Component {
 
         <NavActions>
           <CurrencySelect />
-          <Icon count={cartCount} onClick={toggleCartOverlay}>
+          <Icon count={cartCount} onClick={toggleCartOverlay} ref={cartButtonRef}>
             <CartIcon />
           </Icon>
         </NavActions>
 
         {cartOpen && (
-          <CartOverlay>
-            <Cart />
-          </CartOverlay>
+          <>
+            <CartOverlay ref={cartRef}>
+              <Cart overlay={true} toggle={toggleCartOverlay} />
+            </CartOverlay>
+
+            <Backdrop />
+          </>
         )}
       </Container>
     );
   }
 }
 
+// REDUX
 const MapStateToProps = (state) => {
   return { cartCount: state.cart.count };
 };

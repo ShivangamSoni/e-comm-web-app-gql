@@ -1,4 +1,7 @@
+// React
 import { Component } from "react";
+
+// Styled Components
 import {
   Container,
   Info,
@@ -23,18 +26,23 @@ import {
   Arrow,
 } from "./StyledComponents";
 
+// Icons
 import { ReactComponent as DeleteIcon } from "../../Assets/Delete.svg";
 import { ReactComponent as PlusIcon } from "../../Assets/plus.svg";
 import { ReactComponent as MinusIcon } from "../../Assets/minus.svg";
 import { ReactComponent as LeftArrow } from "../../Assets/chevron-left.svg";
 import { ReactComponent as RightArrow } from "../../Assets/chevron-right.svg";
 
+// Apollo GraphQL
 import { graphql } from "@apollo/client/react/hoc";
 import { GET_PRODUCT_DETAILS } from "../../Apollo/queries";
-import getPrice from "../../Utils/getPrice";
 
+// Redux
 import { connect } from "react-redux";
-import { removeProduct, updateQuantity } from "../../Redux/Cart/ActionCreators";
+import { removeProduct, updateAttributes, updateQuantity } from "../../Redux/Cart/ActionCreators";
+
+// Utility Functions
+import getPrice from "../../Utils/getPrice";
 
 class CartItem extends Component {
   constructor(props) {
@@ -46,6 +54,7 @@ class CartItem extends Component {
 
     this.changeSlide = this.changeSlide.bind(this);
     this.changeQuantity = this.changeQuantity.bind(this);
+    this.changeAttribute = this.changeAttribute.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
   }
 
@@ -71,13 +80,21 @@ class CartItem extends Component {
 
   changeQuantity(sign) {
     const { itemId, dispatchUpdateQuantity } = this.props;
-
     dispatchUpdateQuantity(itemId, sign);
+  }
+
+  changeAttribute(type, value) {
+    const { itemId, selectedAttributes, dispatchUpdateAttributes } = this.props;
+
+    // Creating a Deep Copy of Selected Attributes
+    const cpyAttributes = JSON.parse(JSON.stringify(selectedAttributes));
+    cpyAttributes[type] = value;
+
+    dispatchUpdateAttributes(itemId, cpyAttributes);
   }
 
   deleteItem() {
     const { itemId, dispatchDeleteProduct } = this.props;
-
     dispatchDeleteProduct(itemId);
   }
 
@@ -94,9 +111,9 @@ class CartItem extends Component {
       return "Loading....";
     }
 
-    const { changeSlide, changeQuantity, deleteItem } = this;
+    const { changeSlide, changeQuantity, changeAttribute, deleteItem } = this;
     const { selectedSlide } = this.state;
-    const { selectedCurrency, selectedAttributes, quantity } = this.props;
+    const { selectedCurrency, selectedAttributes, quantity, overlay } = this.props;
     const { name, brand, prices, attributes, gallery } = product;
     const currencyPrice = getPrice(prices, selectedCurrency);
 
@@ -104,11 +121,13 @@ class CartItem extends Component {
       let attrSets = items.map(({ id, value, displayValue }) => {
         const active = selectedAttributes[attrId] === id;
 
+        const onClick = () => changeAttribute(attrId, id);
+
         if (type === "swatch") {
-          return <ColorAttr key={id} title={displayValue} color={value} active={active}></ColorAttr>;
+          return <ColorAttr key={id} title={displayValue} color={value} active={active} onClick={onClick}></ColorAttr>;
         } else {
           return (
-            <TextAttr key={id} title={displayValue} active={active}>
+            <TextAttr key={id} title={displayValue} active={active} onClick={onClick}>
               {value}
             </TextAttr>
           );
@@ -117,43 +136,45 @@ class CartItem extends Component {
 
       return (
         <Section key={attrId}>
-          <Title>{name}:</Title>
+          <Title overlay={overlay}>{name}:</Title>
 
-          <AttrWrapper type={type}>{attrSets}</AttrWrapper>
+          <AttrWrapper type={type} overlay={overlay}>
+            {attrSets}
+          </AttrWrapper>
         </Section>
       );
     });
 
     return (
-      <Container>
+      <Container overlay={overlay}>
         <Info>
           <Section>
-            <Brand>{brand}</Brand>
-            <Name>{name}</Name>
+            <Brand overlay={overlay}>{brand}</Brand>
+            <Name overlay={overlay}>{name}</Name>
           </Section>
 
           <Section>
-            <Price>{`${selectedCurrency}${currencyPrice}`}</Price>
+            <Price overlay={overlay}>{`${selectedCurrency}${currencyPrice}`}</Price>
           </Section>
 
           {attributeElements}
 
           <Section>
-            <Button>
-              <DeleteIcon fill="currentColor" title="Delete" onClick={deleteItem} />
+            <Button overlay={overlay} onClick={deleteItem}>
+              <DeleteIcon fill="currentColor" title="Delete" />
             </Button>
           </Section>
         </Info>
 
         <Wrapper>
-          <Quantity>
-            <QuantityBtn onClick={() => changeQuantity("+")}>
+          <Quantity overlay={overlay}>
+            <QuantityBtn onClick={() => changeQuantity("+")} overlay={overlay}>
               <PlusIcon fill="currentColor" />
             </QuantityBtn>
 
-            <QuantityValue>{quantity}</QuantityValue>
+            <QuantityValue overlay={overlay}>{quantity}</QuantityValue>
 
-            <QuantityBtn onClick={() => changeQuantity("-")}>
+            <QuantityBtn onClick={() => changeQuantity("-")} overlay={overlay}>
               <MinusIcon fill="currentColor" />
             </QuantityBtn>
           </Quantity>
@@ -185,6 +206,7 @@ class CartItem extends Component {
   }
 }
 
+// GraphQL
 const withGQL = graphql(GET_PRODUCT_DETAILS, {
   options: (props) => {
     let { id } = props;
@@ -192,6 +214,7 @@ const withGQL = graphql(GET_PRODUCT_DETAILS, {
   },
 });
 
+// Redux
 const MapStateToProps = (state) => {
   return { selectedCurrency: state.site.currency };
 };
@@ -200,6 +223,7 @@ const MapDispatchToProps = (dispatch) => {
   return {
     dispatchUpdateQuantity: (id, sign) => dispatch(updateQuantity(id, sign)),
     dispatchDeleteProduct: (id) => dispatch(removeProduct(id)),
+    dispatchUpdateAttributes: (id, attributes) => dispatch(updateAttributes(id, attributes)),
   };
 };
 

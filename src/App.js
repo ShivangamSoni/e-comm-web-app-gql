@@ -1,12 +1,16 @@
+// React
 import { Component } from "react";
 
 // Components
+import { Main } from "./CommonStyles";
 import Header from "./Components/Header";
-import { Routes, Route, Navigate } from "react-router-dom";
 import Listing from "./Pages/Listing";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
-import { Main } from "./CommonStyles";
+import NotFound from "./Pages/NotFound";
+
+// React Router
+import { Routes, Route, Navigate } from "react-router-dom";
 
 class App extends Component {
   render() {
@@ -24,7 +28,7 @@ class App extends Component {
 
             <Route path="/cart" element={<Cart />} />
 
-            <Route path="/not-found" element={<>Not Found</>} />
+            <Route path="/not-found" element={<NotFound />} />
 
             <Route path="/*" element={<Navigate to="/not-found" replace={true} />} />
           </Routes>

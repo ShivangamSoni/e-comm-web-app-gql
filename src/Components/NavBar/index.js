@@ -1,7 +1,13 @@
+// React
 import { Component } from "react";
+
+// Styled Components
 import { Nav } from "./StyledComponents";
+
+// React Router
 import { NavLink } from "react-router-dom";
 
+// Apollo GraphQL
 import { graphql } from "@apollo/client/react/hoc";
 import { GET_CATEGORIES } from "../../Apollo/queries";
 

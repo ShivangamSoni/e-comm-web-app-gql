@@ -46,10 +46,20 @@ export const Icon = styled.div`
 export const CartOverlay = styled.div`
   position: absolute;
   top: 100%;
-  filter: drop-shadow(0px 4px 35px rgba(57, 55, 72, 0.22));
   right: 0;
   z-index: 99;
-  width: 350px;
-  height: min(600px, 100vh);
-  background-color: red;
+  width: min(500px, 90vw);
+  height: min(600px, 90vh);
+  background-color: #fff;
+  padding: 10px;
+`;
+
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 53px;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(57, 55, 72, 0.22);
 `;

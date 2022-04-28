@@ -1,11 +1,16 @@
+// React
 import { Component } from "react";
 
+// Styled Components
 import { Container, Title, ProductsList } from "./StyledComponents";
 
+// Components
 import ProductCard from "../../Components/ProductCard";
 
+// React Router DOM HOC
 import withRouter from "../../Utils/withRouter";
 
+// Apollo GraphQL
 import { graphql } from "@apollo/client/react/hoc";
 import { GET_PRODUCTS_LISTING } from "../../Apollo/queries";
 
@@ -38,6 +43,7 @@ class Listing extends Component {
   }
 }
 
+// GraphQL
 const withGQL = graphql(GET_PRODUCTS_LISTING, {
   options: (props) => {
     let { category } = props.params;

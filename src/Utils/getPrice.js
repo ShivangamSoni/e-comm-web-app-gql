@@ -13,7 +13,7 @@ const getPrice = (prices, selectedCurrency) => {
     }
   });
 
-  return currencyPrice;
+  return currencyPrice.toFixed(2);
 };
 
 export default getPrice;

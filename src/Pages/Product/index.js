@@ -1,12 +1,7 @@
+// React
 import { Component } from "react";
 
-import { graphql } from "@apollo/client/react/hoc";
-import { GET_PRODUCT_DETAILS } from "../../Apollo/queries";
-
-import withRouter from "../../Utils/withRouter";
-
-import { connect } from "react-redux";
-
+// Styled Components
 import {
   Container,
   Gallery,
@@ -26,8 +21,20 @@ import {
   Button,
   Description,
 } from "./StyledComponents";
-import getPrice from "../../Utils/getPrice";
+
+// Apollo GraphQL
+import { graphql } from "@apollo/client/react/hoc";
+import { GET_PRODUCT_DETAILS } from "../../Apollo/queries";
+
+// React Router DOM HOC
+import withRouter from "../../Utils/withRouter";
+
+// Redux
+import { connect } from "react-redux";
 import { addProduct } from "../../Redux/Cart/ActionCreators";
+
+// Utility Functions
+import getPrice from "../../Utils/getPrice";
 
 class Product extends Component {
   constructor(props) {
@@ -192,6 +199,7 @@ class Product extends Component {
   }
 }
 
+// GraphQL
 const withGQL = graphql(GET_PRODUCT_DETAILS, {
   options: (props) => {
     let { id } = props.params;
@@ -199,6 +207,7 @@ const withGQL = graphql(GET_PRODUCT_DETAILS, {
   },
 });
 
+// Redux
 const MapStateToProps = (state) => {
   return { selectedCurrency: state.site.currency };
 };
