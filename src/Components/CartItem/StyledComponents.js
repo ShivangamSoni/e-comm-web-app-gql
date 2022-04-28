@@ -35,6 +35,7 @@ export const Name = styled.h3`
 
 export const Section = styled.div`
   display: grid;
+  cursor: ${({ link }) => link && "pointer"};
 `;
 
 export const AttrWrapper = styled.div`

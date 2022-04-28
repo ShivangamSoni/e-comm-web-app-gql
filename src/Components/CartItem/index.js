@@ -45,6 +45,9 @@ import { GET_PRODUCT_DETAILS } from "../../Apollo/queries";
 import { connect } from "react-redux";
 import { removeProduct, updateAttributes, updateQuantity } from "../../Redux/Cart/ActionCreators";
 
+// React Router DOM HOC
+import withRouter from "../../Utils/withRouter";
+
 // Utility Functions
 import getPrice from "../../Utils/getPrice";
 
@@ -117,7 +120,7 @@ class CartItem extends Component {
 
     const { changeSlide, changeQuantity, changeAttribute, deleteItem } = this;
     const { selectedSlide } = this.state;
-    const { selectedCurrency, selectedAttributes, quantity, overlay } = this.props;
+    const { selectedCurrency, selectedAttributes, quantity, overlay, navigate, id } = this.props;
     const { name, brand, prices, attributes, gallery } = product;
     const currencyPrice = getPrice(prices, selectedCurrency);
 
@@ -152,7 +155,7 @@ class CartItem extends Component {
     return (
       <Container overlay={overlay}>
         <Info>
-          <Section>
+          <Section link={true} onClick={() => navigate(`/product/${id}`)}>
             <Brand overlay={overlay}>{brand}</Brand>
             <Name overlay={overlay}>{name}</Name>
           </Section>
@@ -231,4 +234,4 @@ const MapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(MapStateToProps, MapDispatchToProps)(withGQL(CartItem));
+export default connect(MapStateToProps, MapDispatchToProps)(withRouter(withGQL(CartItem)));

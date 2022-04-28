@@ -40,6 +40,9 @@ import { addProduct } from "../../Redux/Cart/ActionCreators";
 // Utility Functions
 import getPrice from "../../Utils/getPrice";
 
+// HTML String Sanitizer
+import { sanitize } from "dompurify";
+
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -196,7 +199,7 @@ class Product extends Component {
             {inStock ? "Add to Cart" : "Out of Stock"}
           </Button>
 
-          <Description dangerouslySetInnerHTML={{ __html: description }} />
+          <Description dangerouslySetInnerHTML={{ __html: sanitize(description, { USE_PROFILES: { html: true } }) }} />
         </Info>
       </Container>
     );
