@@ -6,6 +6,8 @@ import { Container, Title, ProductsList } from "./StyledComponents";
 
 // Components
 import ProductCard from "../../Components/ProductCard";
+import Loading from "../../Components/Modals/Loading";
+import Error from "../../Components/Modals/Error";
 
 // React Router DOM HOC
 import withRouter from "../../Utils/withRouter";
@@ -22,11 +24,11 @@ class Listing extends Component {
     } = this.props;
 
     if (error) {
-      return "Error";
+      return <Error />;
     }
 
     if (loading) {
-      return "Loading....";
+      return <Loading />;
     }
 
     return (

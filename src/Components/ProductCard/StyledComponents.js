@@ -1,12 +1,11 @@
 import styled from "styled-components";
+import { ButtonCommon } from "../../CommonStyles";
 
 export const Button = styled.button`
-  appearance: none;
-  border: none;
-  outline: none;
+  ${ButtonCommon}
+
+  padding: 0;
   border-radius: 50%;
-  cursor: pointer;
-  background-color: #5ece7b;
   width: 32px;
   height: 32px;
   display: flex;

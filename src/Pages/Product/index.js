@@ -22,6 +22,10 @@ import {
   Description,
 } from "./StyledComponents";
 
+// Components
+import Loading from "../../Components/Modals/Loading";
+import Error from "../../Components/Modals/Error";
+
 // Apollo GraphQL
 import { graphql } from "@apollo/client/react/hoc";
 import { GET_PRODUCT_DETAILS } from "../../Apollo/queries";
@@ -112,11 +116,11 @@ class Product extends Component {
     } = this.props;
 
     if (error) {
-      return "Error Loading Try Again...";
+      return <Error />;
     }
 
     if (loading) {
-      return "Loading....";
+      return <Loading />;
     }
 
     if (product == null) {

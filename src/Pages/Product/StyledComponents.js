@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ButtonCommon } from "../../CommonStyles";
 
 export const Container = styled.div`
   display: grid;
@@ -104,15 +105,9 @@ export const Price = styled.span`
 `;
 
 export const Button = styled.button`
-  appearance: none;
-  border: none;
-  padding: none;
+  ${ButtonCommon}
+
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  padding: 0.7rem 1rem;
-  background-color: #5ece7b;
 `;
 
 export const Description = styled.div`

@@ -6,14 +6,27 @@ export const widthWrap = css`
   margin-right: auto;
 `;
 
-export const Main = styled.main`
-  ${widthWrap}
-  padding-bottom: 20px;
-`;
-
 export const PageTitle = css`
   color: #1d1f22;
   font-size: 2.6rem;
   font-weight: 400;
   text-transform: capitalize;
+`;
+
+export const ButtonCommon = css`
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  background-color: #5ece7b;
+  text-transform: uppercase;
+`;
+
+export const Main = styled.main`
+  ${widthWrap}
+  padding-bottom: 20px;
 `;

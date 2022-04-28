@@ -6,6 +6,8 @@ import { Container, Title, CartListing, CartInfo, Detail, Info, ButtonWrapper, B
 
 // Components
 import CartItem from "../../Components/CartItem";
+import Loading from "../../Components/Modals/Loading";
+import Error from "../../Components/Modals/Error";
 
 // Redux
 import { connect } from "react-redux";
@@ -39,11 +41,11 @@ class Cart extends Component {
     } = this.props;
 
     if (error) {
-      return "Error";
+      return <Error />;
     }
 
     if (loading) {
-      return "Loading...";
+      return <Loading />;
     }
 
     const { openCartFromOverlay } = this;

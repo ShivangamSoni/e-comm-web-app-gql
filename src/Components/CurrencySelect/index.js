@@ -4,6 +4,10 @@ import { Component, createRef } from "react";
 // Styled Components
 import { SelectContainer, SelectHeader, SelectedTitle, SelectBody, SelectOption } from "./StyledComponents";
 
+// Components
+import Loading from "../Modals/Loading";
+import Error from "../Modals/Error";
+
 // Apollo GraphQl
 import { GET_CURRENCIES } from "../../Apollo/queries";
 import { graphql } from "@apollo/client/react/hoc";
@@ -71,11 +75,11 @@ class CurrencySelect extends Component {
     const { toggle, menuRef } = this;
 
     if (error) {
-      return "Error Loading... Try Refreshing the Page";
+      return <Error />;
     }
 
     if (loading) {
-      return "Loading...";
+      return <Loading />;
     }
 
     return (

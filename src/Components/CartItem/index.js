@@ -26,6 +26,10 @@ import {
   Arrow,
 } from "./StyledComponents";
 
+// Components
+import Loading from "../Modals/Loading";
+import Error from "../Modals/Error";
+
 // Icons
 import { ReactComponent as DeleteIcon } from "../../Assets/Delete.svg";
 import { ReactComponent as PlusIcon } from "../../Assets/plus.svg";
@@ -104,11 +108,11 @@ class CartItem extends Component {
     } = this.props;
 
     if (error) {
-      return "Error";
+      return <Error />;
     }
 
     if (loading) {
-      return "Loading....";
+      return <Loading />;
     }
 
     const { changeSlide, changeQuantity, changeAttribute, deleteItem } = this;

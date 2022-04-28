@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PageTitle } from "../../CommonStyles";
+import { PageTitle, ButtonCommon } from "../../CommonStyles";
 
 export const Container = styled.div`
   display: grid;
@@ -50,15 +50,13 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const Button = styled.button`
+  ${ButtonCommon}
+
   flex: 1;
-  appearance: none;
   border: ${({ variant }) => (variant === "outlined" ? "1px solid #1d1f22" : "none")};
-  padding: none;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   font-size: 0.875rem;
-  font-weight: 600;
   color: ${({ variant }) => (variant === "outlined" ? "#1d1f22" : "#fff")};
   padding: ${({ overlay }) => (overlay ? "0.3rem" : "0.5rem")};
   background-color: ${({ variant }) => (variant === "outlined" ? "#fff" : "#5ece7b")};
-  text-transform: uppercase;
 `;

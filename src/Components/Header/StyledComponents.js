@@ -3,6 +3,7 @@ import { widthWrap } from "../../CommonStyles";
 
 export const Container = styled.header`
   ${widthWrap}
+
   display: flex;
   align-items: center;
   justify-content: space-between;

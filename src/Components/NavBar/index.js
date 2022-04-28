@@ -4,6 +4,10 @@ import { Component } from "react";
 // Styled Components
 import { Nav } from "./StyledComponents";
 
+// Components
+import Loading from "../Modals/Loading";
+import Error from "../Modals/Error";
+
 // React Router
 import { NavLink } from "react-router-dom";
 
@@ -18,11 +22,11 @@ class NavBar extends Component {
     } = this.props;
 
     if (error) {
-      return "Error Loading... Try Refreshing the Page";
+      return <Error />;
     }
 
     if (loading) {
-      return "Loading";
+      return <Loading />;
     }
 
     return (

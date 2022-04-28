@@ -36,3 +36,8 @@ body {
   font-family: "Raleway", sans-serif;
   color: #1d1f22;
 }
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
