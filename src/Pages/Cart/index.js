@@ -67,7 +67,7 @@ class Cart extends Component {
       <Container>
         {overlay ? (
           <Detail>
-            <Info>My Bag:</Info> {count} items
+            <Info>My Bag,</Info> {count} items
           </Detail>
         ) : (
           <Title>CART</Title>

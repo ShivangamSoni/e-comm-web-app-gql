@@ -11,7 +11,10 @@ export const Container = styled.div`
 
 export const Title = styled.h2`
   ${PageTitle}
-  margin-bottom: 10px;
+
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 55px;
 `;
 
 export const CartListing = styled.div`
@@ -43,7 +46,7 @@ export const Info = styled.span`
 `;
 
 export const ButtonWrapper = styled.div`
-  width: ${({ overlay }) => (overlay ? "50%" : "min(30%, 250px)")};
+  width: ${({ overlay }) => (overlay ? "70%" : "min(30%, 250px)")};
   display: flex;
   justify-content: flex-start;
   gap: 10px;

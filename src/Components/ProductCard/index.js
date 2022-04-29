@@ -48,7 +48,7 @@ class ProductCard extends Component {
     let currencyPrice = getPrice(prices, selectedCurrency);
 
     return (
-      <Container>
+      <Container onClick={openProduct}>
         {!inStock && <Overlay>OUT OF STOCK</Overlay>}
 
         <ImageWrapper>
@@ -56,7 +56,7 @@ class ProductCard extends Component {
         </ImageWrapper>
 
         <Info>
-          <Title onClick={openProduct}>{`${brand} ${name}`}</Title>
+          <Title>{`${brand} ${name}`}</Title>
           <Price>{`${selectedCurrency}${currencyPrice}`}</Price>
 
           {inStock && (

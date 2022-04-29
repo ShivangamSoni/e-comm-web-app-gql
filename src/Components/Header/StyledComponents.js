@@ -4,20 +4,28 @@ import { widthWrap } from "../../CommonStyles";
 export const Container = styled.header`
   ${widthWrap}
 
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-flow: row wrap;
   gap: 5px;
-  padding: 10px 0;
   position: relative;
+  margin-bottom: 80px;
+`;
+
+export const SiteLogo = styled.div`
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
 `;
 
 export const NavActions = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-end;
+  width: 100px;
+  gap: 20px;
 `;
 
 export const Icon = styled.div`
@@ -25,20 +33,24 @@ export const Icon = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 5px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 
   &::after {
     content: "${({ count }) => (count > 0 ? count : "")}";
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 15px;
-    height: 15px;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
     background-color: #1d1f22;
-    font-size: 11px;
+    font-size: 0.875rem;
+    font-weight: 700;
     color: #fff;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     transform: scale(${({ count }) => (count > 0 ? 1 : 0)});
   }
@@ -48,16 +60,16 @@ export const CartOverlay = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
-  z-index: 99;
-  width: min(500px, 90vw);
+  z-index: 90;
+  width: min(350px, 95vw);
   height: min(600px, 90vh);
   background-color: #fff;
-  padding: 10px;
+  padding: 32px 16px;
 `;
 
 export const Backdrop = styled.div`
   position: fixed;
-  top: 53px;
+  top: 80px;
   left: 0;
   z-index: 10;
   width: 100vw;

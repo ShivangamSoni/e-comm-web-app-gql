@@ -2,7 +2,7 @@
 import { Component, createRef } from "react";
 
 // Styled Components
-import { SelectContainer, SelectHeader, SelectedTitle, SelectBody, SelectOption } from "./StyledComponents";
+import { SelectContainer, SelectHeader, SelectedTitle, SelectBody, SelectOption, OptionText } from "./StyledComponents";
 
 // Components
 import Loading from "../Modals/Loading";
@@ -84,7 +84,7 @@ class CurrencySelect extends Component {
 
     return (
       <SelectContainer ref={menuRef}>
-        <SelectHeader tabIndex={0} role="button" onClick={toggle}>
+        <SelectHeader tabIndex={0} role="button" isOpen={open} onClick={toggle}>
           <SelectedTitle>{selectedCurrency}</SelectedTitle>
         </SelectHeader>
 
@@ -92,8 +92,7 @@ class CurrencySelect extends Component {
           <SelectBody>
             {currencies.map(({ label, symbol }) => (
               <SelectOption key={label} onClick={() => this.handleSelection(symbol)}>
-                <span>{symbol}</span>
-                <span>{label}</span>
+                <OptionText>{`${symbol} ${label}`}</OptionText>
               </SelectOption>
             ))}
           </SelectBody>

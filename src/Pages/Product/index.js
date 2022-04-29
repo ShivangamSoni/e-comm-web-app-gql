@@ -188,7 +188,7 @@ class Product extends Component {
             <Name>{name}</Name>
           </Section>
 
-          {attributeElements}
+          <Section>{attributeElements}</Section>
 
           <Section>
             <Title>price:</Title>

@@ -7,12 +7,13 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   ${PageTitle}
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 `;
 
 export const ProductsList = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 450px;
-  gap: 30px;
+  grid-auto-rows: 444px;
+  column-gap: 40px;
+  row-gap: 100px;
 `;

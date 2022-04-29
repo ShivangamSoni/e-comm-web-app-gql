@@ -1,31 +1,35 @@
 import styled from "styled-components";
 
+import ArrowDown from "../../Assets/arrow-down.svg";
+import ArrowUp from "../../Assets/arrow-up.svg";
+
 export const SelectContainer = styled.div`
   position: relative;
 `;
 
 export const SelectHeader = styled.div`
   padding-right: 20px;
-  padding-left: 5px;
-  width: 45px;
+  width: max-content;
   position: relative;
   cursor: pointer;
 
   &::after {
-    content: "\u2304";
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
-    width: 15px;
-    height: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 10px;
+    height: 100%;
+    background-image: url(${({ isOpen }) => (isOpen ? ArrowUp : ArrowDown)});
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
   }
 `;
 
 export const SelectedTitle = styled.span`
-  font-size: 0.9rem;
+  font-size: 1.125rem;
+  font-weight: 500;
 `;
 
 export const SelectBody = styled.ul`
@@ -34,29 +38,25 @@ export const SelectBody = styled.ul`
   right: 0;
   z-index: 10;
   list-style: none;
-  width: 250%;
+  width: max-content;
   background-color: #fff;
-  filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.2));
+  filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
 `;
 
 export const SelectOption = styled.li`
-  padding: 5px;
-  padding-left: 10px;
+  padding: 20px 40px 13px 20px;
   background-color: #fff;
   cursor: pointer;
   transition: background-color 250ms linear;
 
   &:hover {
-    background-color: rgba(238, 238, 238, 1);
+    background-color: #eeeeee;
   }
+`;
 
-  span {
-    pointer-events: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-
-  span + span {
-    margin-left: 10px;
-  }
+export const OptionText = styled.div`
+  pointer-events: none;
+  pointer-events: none;
+  font-size: 1.125rem;
+  font-weight: 500;
 `;

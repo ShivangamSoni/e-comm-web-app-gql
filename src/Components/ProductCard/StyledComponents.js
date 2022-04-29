@@ -20,11 +20,12 @@ export const Button = styled.button`
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5fr 1fr;
-  gap: 10px;
-  padding: 15px;
+  grid-template-rows: 1fr 60px;
+  gap: 24px;
   background-color: #fff;
+  padding: 16px;
   position: relative;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
@@ -55,29 +56,29 @@ export const ImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 `;
 
 export const Image = styled.img`
   width: 100%;
-  height: min(450px, 90%);
-  aspect-ratio: 1/1;
+  height: 90%;
   object-fit: contain;
 `;
 
 export const Info = styled.div`
   position: relative;
-  align-self: flex-end;
 `;
 
 export const Title = styled.p`
   color: #1d1f22;
+  font-size: 1.125rem;
   font-weight: 300;
-  font-size: 1rem;
-  cursor: pointer;
+  height: 29px;
 `;
 
 export const Price = styled.span`
   color: #1d1f22;
-  font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  height: 29px;
 `;

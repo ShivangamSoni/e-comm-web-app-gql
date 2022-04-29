@@ -65,7 +65,7 @@ const cartReducer = (state = { count: 0, items: [], tax: 15 }, action) => {
       const { productId } = state.items[index];
 
       // If an Item with same productId & attributes already exist
-      const matchedIndex = state.items.findIndex((item) => item.productId === productId && shallowEquals(item.attributes, attributes));
+      const matchedIndex = state.items.findIndex((item) => item.productId === productId && shallowEquals(item.attributes, attributes) && item.id !== id);
 
       if (matchedIndex === -1) {
         state.items[index].attributes = attributes;

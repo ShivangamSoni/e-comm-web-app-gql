@@ -3,28 +3,27 @@ import { ButtonCommon } from "../../CommonStyles";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 3fr 2fr;
-  grid-template-rows: 500px auto;
+  grid-template-columns: 700px 300px;
+  grid-template-rows: 560px auto;
   grid-template-areas:
     "gallery info"
-    ". info";
-  gap: 10px;
+    "gallery info";
+  gap: 100px;
 `;
 
 export const Gallery = styled.div`
   grid-area: gallery;
   display: grid;
-  grid-template-columns: 150px 1fr;
-  grid-template-rows: 100%;
+  grid-template-columns: 80px 1fr;
+  grid-template-rows: 560px auto;
   gap: 10px;
 `;
 
 export const ShowCase = styled.div`
-  overflow-y: auto;
   display: grid;
   grid-template-columns: 1fr;
-  grid-auto-rows: 150px;
-  gap: 3px;
+  grid-auto-rows: 80px;
+  gap: 40px;
 `;
 
 export const Tile = styled.div`
@@ -61,14 +60,14 @@ export const Name = styled.h3`
 
 export const Section = styled.div`
   display: grid;
-  gap: 5px;
+  gap: 8px;
 `;
 
 export const AttrWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, ${({ type }) => (type === "swatch" ? "32px" : "minmax(50px, auto)")});
-  grid-auto-rows: ${({ type }) => (type === "swatch" ? "32px" : "50px")};
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, ${({ type }) => (type === "swatch" ? "32px" : "63px")});
+  grid-auto-rows: ${({ type }) => (type === "swatch" ? "32px" : "45px")};
+  gap: 12px;
 `;
 
 export const ColorAttr = styled.button`

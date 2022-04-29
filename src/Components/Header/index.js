@@ -2,7 +2,7 @@
 import { Component, createRef } from "react";
 
 // Styled Components
-import { Container, NavActions, Icon, CartOverlay, Backdrop } from "./StyledComponents";
+import { Container, SiteLogo, NavActions, Icon, CartOverlay, Backdrop } from "./StyledComponents";
 
 // Components
 import NavBar from "../NavBar";
@@ -55,12 +55,14 @@ class Header extends Component {
       <Container>
         <NavBar />
 
-        <SiteIcon />
+        <SiteLogo>
+          <SiteIcon />
+        </SiteLogo>
 
         <NavActions>
           <CurrencySelect />
           <Icon count={cartCount} onClick={toggleCartOverlay} ref={cartButtonRef}>
-            <CartIcon />
+            <CartIcon fill="#43464E" />
           </Icon>
         </NavActions>
 

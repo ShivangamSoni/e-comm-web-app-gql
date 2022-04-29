@@ -3,28 +3,33 @@ import { ButtonCommon } from "../../CommonStyles";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 250px auto;
+  grid-template-columns: repeat(2, ${({ overlay }) => (overlay ? "1fr" : "250px")});
+  grid-template-rows: ${({ overlay }) => (overlay ? "190px" : "280px")} auto;
   grid-template-areas:
     "info wrapper"
     "info .";
-  column-gap: ${({ overlay }) => (overlay ? "20px" : "200px")};
-  padding: 10px 0;
+  justify-content: space-between;
+  padding: 30px 0;
   border-bottom: 1px solid #e5e5e5;
   padding-left: 5px;
+
+  &:first-of-type {
+    border-top: 1px solid #e5e5e5;
+  }
 `;
 
 export const Info = styled.div`
   grid-area: info;
   display: grid;
   grid-auto-rows: minmax(auto, max-content);
-  gap: 10px;
+  gap: 20px;
 `;
 
 export const Brand = styled.h2`
   color: #1d1f22;
   font-size: ${({ overlay }) => (overlay ? "1rem" : "1.8rem")};
   font-weight: ${({ overlay }) => (overlay ? 300 : 600)};
+  padding-bottom: ${({ overlay }) => (overlay ? "0" : "8px")}; ;
 `;
 
 export const Name = styled.h3`
@@ -35,6 +40,7 @@ export const Name = styled.h3`
 
 export const Section = styled.div`
   display: grid;
+  gap: 8px;
   cursor: ${({ link }) => link && "pointer"};
 `;
 
@@ -49,13 +55,14 @@ export const AttrWrapper = styled.div`
       styles.gridAutoRows = size;
     } else {
       const size = overlay ? "24px" : "50px";
-      styles.gridTemplateColumns = `repeat(auto-fit, minmax(${size}, auto))`;
+      styles.gridTemplateColumns = `repeat(auto-fit, ${size})`;
       styles.gridAutoRows = size;
     }
 
     return styles;
   }}
-  gap: 10px;
+
+  gap: 8px;
 `;
 
 export const ColorAttr = styled.button`
@@ -76,6 +83,11 @@ export const TextAttr = styled.button`
   background-color: ${({ active, disabled }) => (active && !disabled ? "#000" : "#fff")};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   border: 1px solid #a6a6a6;
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-family: "Source Sans Pro", sans-serif;
+  overflow: hidden;
+  text-overflow: clip;
 `;
 
 export const Title = styled.h4`
@@ -104,6 +116,7 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: ${({ overlay }) => (overlay ? "25px" : "50px")} 1fr;
   grid-template-rows: 100%;
+  position: sticky;
 `;
 
 export const Quantity = styled.div`

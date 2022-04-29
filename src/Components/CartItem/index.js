@@ -18,7 +18,6 @@ import {
   Title,
   ColorAttr,
   TextAttr,
-  Button,
   Slides,
   Slide,
   Image,
@@ -31,7 +30,6 @@ import Loading from "../Modals/Loading";
 import Error from "../Modals/Error";
 
 // Icons
-import { ReactComponent as DeleteIcon } from "../../Assets/Delete.svg";
 import { ReactComponent as PlusIcon } from "../../Assets/plus.svg";
 import { ReactComponent as MinusIcon } from "../../Assets/minus.svg";
 import { ReactComponent as LeftArrow } from "../../Assets/chevron-left.svg";
@@ -43,7 +41,7 @@ import { GET_PRODUCT_DETAILS } from "../../Apollo/queries";
 
 // Redux
 import { connect } from "react-redux";
-import { removeProduct, updateAttributes, updateQuantity } from "../../Redux/Cart/ActionCreators";
+import { updateAttributes, updateQuantity } from "../../Redux/Cart/ActionCreators";
 
 // React Router DOM HOC
 import withRouter from "../../Utils/withRouter";
@@ -62,7 +60,6 @@ class CartItem extends Component {
     this.changeSlide = this.changeSlide.bind(this);
     this.changeQuantity = this.changeQuantity.bind(this);
     this.changeAttribute = this.changeAttribute.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
   }
 
   changeSlide(direction) {
@@ -100,11 +97,6 @@ class CartItem extends Component {
     dispatchUpdateAttributes(itemId, cpyAttributes);
   }
 
-  deleteItem() {
-    const { itemId, dispatchDeleteProduct } = this.props;
-    dispatchDeleteProduct(itemId);
-  }
-
   render() {
     const {
       data: { loading, error, product },
@@ -118,7 +110,7 @@ class CartItem extends Component {
       return <Loading />;
     }
 
-    const { changeSlide, changeQuantity, changeAttribute, deleteItem } = this;
+    const { changeSlide, changeQuantity, changeAttribute } = this;
     const { selectedSlide } = this.state;
     const { selectedCurrency, selectedAttributes, quantity, overlay, navigate, id } = this.props;
     const { name, brand, prices, attributes, gallery } = product;
@@ -164,13 +156,7 @@ class CartItem extends Component {
             <Price overlay={overlay}>{`${selectedCurrency}${currencyPrice}`}</Price>
           </Section>
 
-          {attributeElements}
-
-          <Section>
-            <Button overlay={overlay} onClick={deleteItem}>
-              <DeleteIcon fill="currentColor" title="Delete" />
-            </Button>
-          </Section>
+          <Section>{attributeElements}</Section>
         </Info>
 
         <Wrapper>
@@ -229,7 +215,6 @@ const MapStateToProps = (state) => {
 const MapDispatchToProps = (dispatch) => {
   return {
     dispatchUpdateQuantity: (id, sign) => dispatch(updateQuantity(id, sign)),
-    dispatchDeleteProduct: (id) => dispatch(removeProduct(id)),
     dispatchUpdateAttributes: (id, attributes) => dispatch(updateAttributes(id, attributes)),
   };
 };
