@@ -30,7 +30,8 @@ class ProductCard extends Component {
     navigate(`/product/${id}`);
   }
 
-  addToCart() {
+  addToCart(e) {
+    e.stopPropagation();
     const { id, attributes, dispatchAddProduct } = this.props;
 
     // If Product doesn't have Attributes then Add to cart, otherwise, open the Product Page
@@ -56,8 +57,8 @@ class ProductCard extends Component {
         </ImageWrapper>
 
         <Info>
-          <Title>{`${brand} ${name}`}</Title>
-          <Price>{`${selectedCurrency}${currencyPrice}`}</Price>
+          <Title inStock={inStock}>{`${brand} ${name}`}</Title>
+          <Price inStock={inStock}>{`${selectedCurrency}${currencyPrice}`}</Price>
 
           {inStock && (
             <Button onClick={addToCart}>

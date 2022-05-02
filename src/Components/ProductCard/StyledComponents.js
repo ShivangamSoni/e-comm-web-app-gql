@@ -40,6 +40,7 @@ export const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: flex;
@@ -48,8 +49,9 @@ export const Overlay = styled.div`
   text-transform: uppercase;
   color: #8d8f9a;
   font-size: 1.5rem;
-  font-weight: 600;
-  background-color: #c4c4c47f;
+  font-weight: 400;
+  background-color: #fff;
+  opacity: 0.5;
 `;
 
 export const ImageWrapper = styled.div`
@@ -70,15 +72,14 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.p`
-  color: #1d1f22;
+  color: ${({ inStock }) => (inStock ? "#1d1f22" : "#8D8F9A")};
   font-size: 1.125rem;
   font-weight: 300;
   height: 29px;
 `;
 
 export const Price = styled.span`
-  color: #1d1f22;
+  color: ${({ inStock }) => (inStock ? "#1d1f22" : "#8D8F9A")};
   font-size: 1.125rem;
   font-weight: 500;
-  height: 29px;
 `;

@@ -50,11 +50,10 @@ class CurrencySelect extends Component {
   }
 
   handleSelection(symbol) {
-    if (this.props.selectedCurrency === symbol) {
-      return;
+    if (this.props.selectedCurrency !== symbol) {
+      this.props.dispatchSetCurrency(symbol);
     }
 
-    this.props.dispatchSetCurrency(symbol);
     this.toggle();
   }
 
